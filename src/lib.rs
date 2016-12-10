@@ -27,11 +27,13 @@ impl<'a> Roller<'a> {
          }
      }
 
-     fn reroll(&mut self) {
+     fn reroll(&mut self) -> i32 {
          let mut parser = Rdp::new(StringInput::new(self.roll));
          parser.expression();
 
          self.total = parser.compute();
+
+         self.total
      }
 
      fn total(&self) -> i32 {
@@ -42,11 +44,8 @@ impl<'a> Roller<'a> {
 #[test]
 fn it_works() {
     let mut roller = Roller::new("4d6");
-    let orig = roller.total();
 
     assert!((4 <= roller.total()) && (roller.total() <= 24));
-
-    roller.reroll();
-
-    assert!(orig != roller.total());
+    
+    assert!(roller.total() != roller.reroll());
 }
