@@ -33,16 +33,20 @@ impl<'a> Roller<'a> {
 
          self.total = parser.compute();
      }
+
+     fn total(&self) -> i32 {
+         self.total
+     }
 }
 
 #[test]
 fn it_works() {
     let mut roller = Roller::new("4d6");
-    let orig = roller.total;
+    let orig = roller.total();
 
-    assert!((4 <= roller.total) && (roller.total <= 24));
+    assert!((4 <= roller.total()) && (roller.total() <= 24));
 
     roller.reroll();
 
-    assert!(orig != roller.total);
+    assert!(orig != roller.total());
 }
