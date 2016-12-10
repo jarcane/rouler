@@ -10,9 +10,9 @@ mod parse;
 use pest::*;
 use parse::*;
 
-#[derive(Debug)]
+//#[derive(Debug)]
 pub struct Roller<'a> {
-    roll: &'a str,
+    roll: parse::Rdp<pest::StringInput<'a>>,
     total: i32,
 }
 
@@ -21,17 +21,16 @@ impl<'a> Roller<'a> {
          let mut parser = Rdp::new(StringInput::new(roll));
          parser.expression();
 
+         let total = parser.compute();
+
          Roller{
-             roll: roll,
-             total: parser.compute()
+             roll: parser,
+             total: total
          }
      }
 
      fn reroll(&mut self) -> i32 {
-         let mut parser = Rdp::new(StringInput::new(self.roll));
-         parser.expression();
-
-         self.total = parser.compute();
+         self.total = self.roll.compute();
 
          self.total
      }
