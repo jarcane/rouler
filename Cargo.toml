@@ -1,0 +1,8 @@
+[package]
+name = "roller"
+version = "0.1.0"
+authors = ["jarcane <jarcane@users.noreply.github.com>"]
+
+[dependencies]
+pest = "0.4.0"
+rand = "0.3.0"
