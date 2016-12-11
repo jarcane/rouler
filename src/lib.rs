@@ -41,12 +41,3 @@ impl<'a> Roller<'a> {
          self.total
      }
 }
-
-#[test]
-fn it_works() {
-    let mut roller = Roller::new("4d6");
-
-    assert!((4 <= roller.total()) && (roller.total() <= 24));
-    
-    assert!(roller.total() != roller.reroll());
-}
