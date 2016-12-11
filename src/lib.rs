@@ -1,8 +1,5 @@
-#![allow(dead_code)]
-
 #[macro_use]
 extern crate pest;
-
 extern crate rand;
 
 mod parse;
@@ -24,20 +21,20 @@ pub struct Roller<'a> {
 }
 
 impl<'a> Roller<'a> {
-     fn new(roll: &str) -> Roller {
+     pub fn new(roll: &str) -> Roller {
          Roller{
              roll: roll,
              total: roll_dice(roll)
          }
      }
 
-     fn reroll(&mut self) -> i32 {
+     pub fn reroll(&mut self) -> i32 {
          self.total = roll_dice(self.roll);
 
          self.total
      }
 
-     fn total(&self) -> i32 {
+     pub fn total(&self) -> i32 {
          self.total
      }
 }
