@@ -3,6 +3,7 @@ extern crate pest;
 extern crate rand;
 
 mod parse;
+mod random;
 
 use pest::*;
 use parse::*;

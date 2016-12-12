@@ -1,5 +1,5 @@
 use pest::*;
-use rand::{thread_rng, Rng};
+use random::*;
 
 impl_rdp! {
     grammar! {
@@ -9,12 +9,12 @@ impl_rdp! {
             multiplication = { times | slash }
             die_roll       = { roll }
         }
-        number = @{ (["0"] | ['1'..'9'] ~ ['0'..'9']*) }
+        number = @{ ["-"]? ~ (["0"] | ['1'..'9'] ~ ['0'..'9']*) }
         plus   =  { ["+"] }
         minus  =  { ["-"] }
         times  =  { ["*"] }
         slash  =  { ["/"] }
-        roll   = @{ ["d"] }
+        roll   =  { ["d"] }
 
         whitespace = _{ [" "] }
     }
@@ -39,9 +39,13 @@ impl_rdp! {
             (_: die_roll, left: compute(), sign, right: compute()) => {
                 match sign.rule {
                     Rule::roll => {
-                        let mut rng = thread_rng();
-
-                        (0..left).map(|_| rng.gen_range(1, right + 1)).fold(0, |acc, x| acc + x)    
+                        if right < 1 {
+                            panic!("Sides must be greater than zero");
+                        } else {
+                            let r = roll_dice_raw(left, right as u32);
+                            println!("{:?}", r);
+                            r
+                        }
                     },
                     _ => unreachable!()
                 }

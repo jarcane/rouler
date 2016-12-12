@@ -22,15 +22,20 @@ fn roller_object_within_range() {
 
 #[test]
 fn reroll_changes_value() {
-    let mut test_roll = Roller::new("12d8");
+    let mut test_roll = Roller::new("100d100");
     
     assert_ne!(test_roll.total(), test_roll.reroll())
 }
 
 #[test]
-#[should_panic(expected = "no pattern matched")]
-fn negative_dice_not_allowed() {
-    assert_range!(-3 => Roller::new("-3d6").total() => -18);
+fn negative_dice_negates_roll_value() {
+    assert_range!(-18 => Roller::new("-3d6").total() => -3);
+}
+
+#[test]
+#[should_panic(expected = "zero")]
+fn non_zero_sides_disallowed() {
+    assert!(Roller::new("3d-6").total() < 0);
 }
 
 #[test]
