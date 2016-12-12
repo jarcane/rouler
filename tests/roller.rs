@@ -33,7 +33,13 @@ fn negative_dice_negates_roll_value() {
 }
 
 #[test]
-#[should_panic(expected = "zero")]
+#[should_panic(expected = "not be zero")]
+fn num_of_dice_nonzero() {
+    assert!(Roller::new("0d6").total() == 0);
+}
+
+#[test]
+#[should_panic(expected = "greater than zero")]
 fn non_zero_sides_disallowed() {
     assert!(Roller::new("3d-6").total() < 0);
 }
