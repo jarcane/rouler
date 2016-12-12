@@ -41,12 +41,13 @@ impl_rdp! {
                     Rule::roll => {
                         if right < 1 {
                             panic!("Sides must be greater than zero");
-                        } else if left == 0 {
-                            panic!("Number of dice must not be zero");
                         } else {
-                            let r = roll_dice_raw(left, right as u32);
-                            println!("{:?}", r);
-                            r
+                            match left.signum() {
+                                0  => panic!("Number of sides must not be zero"),
+                                -1 => -roll_dice_raw(left.abs(), right as u32),
+                                1  => roll_dice_raw(left, right as u32),
+                                _  => unreachable!()
+                            }
                         }
                     },
                     _ => unreachable!()
