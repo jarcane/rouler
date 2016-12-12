@@ -14,7 +14,7 @@ impl_rdp! {
         minus  =  { ["-"] }
         times  =  { ["*"] }
         slash  =  { ["/"] }
-        roll   =  { ["d"] }
+        roll   = @{ ["d"] }
 
         whitespace = _{ [" "] }
     }
