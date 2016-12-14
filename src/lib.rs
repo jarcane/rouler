@@ -10,7 +10,7 @@ use std::cmp::Ordering;
 use pest::*;
 use parse::*;
 
-pub fn roll_dice(r: &str) -> i32 {
+pub fn roll_dice(r: &str) -> i64 {
     let mut parser = Rdp::new(StringInput::new(r));
     parser.expression();
 
@@ -20,7 +20,7 @@ pub fn roll_dice(r: &str) -> i32 {
 #[derive(Debug)]
 pub struct Roller<'a> {
     roll: &'a str,
-    total: i32,
+    total: i64,
 }
 
 impl<'a> Roller<'a> {
@@ -31,13 +31,13 @@ impl<'a> Roller<'a> {
          }
      }
 
-     pub fn reroll(&mut self) -> i32 {
+     pub fn reroll(&mut self) -> i64 {
          self.total = roll_dice(self.roll);
 
          self.total
      }
 
-     pub fn total(&self) -> i32 {
+     pub fn total(&self) -> i64 {
          self.total
      }
 }

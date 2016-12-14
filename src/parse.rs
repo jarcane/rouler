@@ -20,8 +20,8 @@ impl_rdp! {
     }
 
     process! {
-        compute(&self) -> i32 {
-            (&number: number) => number.parse::<i32>().unwrap(),
+        compute(&self) -> i64 {
+            (&number: number) => number.parse::<i64>().unwrap(),
             (_: addition, left: compute(), sign, right: compute()) => {
                 match sign.rule {
                     Rule::plus  => left + right,
@@ -44,8 +44,8 @@ impl_rdp! {
                         } else {
                             match left.signum() {
                                 0  => panic!("Number of sides must not be zero"),
-                                -1 => -roll_dice_raw(left.abs(), right as u32),
-                                1  => roll_dice_raw(left, right as u32),
+                                -1 => -roll_dice_raw(left.abs(), right as u64),
+                                1  => roll_dice_raw(left, right as u64),
                                 _  => unreachable!()
                             }
                         }
