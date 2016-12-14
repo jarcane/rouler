@@ -7,6 +7,8 @@
 
 #![warn(missing_docs)]
 //! # rouler - A container-like system for generating dice rolls
+//!
+//! [![Crates.io](https://img.shields.io/crates/v/rouler.svg)](https://crates.io/crates/rouler)
 //! 
 //! rouler is a library for handling repeatable dice rolls in a conveniently storable way.
 //! At the heart of rouler is the `Roller`, a simple struct that contains both the syntax for a specific
@@ -29,6 +31,7 @@
 //! 
 //! rouler uses parsed strings to define die rolls, according to the following [pest](https://github.com/dragostis/pest/) 
 //! grammar found in `parse.rs`, with some additional rules checking: 
+//! 
 //! ```rust,ignore
 //! expression = _{
 //!     { ["("] ~ expression ~ [")"] | number }
@@ -49,7 +52,7 @@
 //! Largely this should all be familiar basic mathematical notation, the key addition being the `d` operator,
 //! which operates according to the standard notation familiar from tabletop RPGs, ie.:
 //! 
-//! `n [d|D] s`, where `n` = the number of dice to roll, and `s` = the number of sides on each die.
+//! `n[d|D]s`, where `n` = the number of dice to roll, and `s` = the number of sides on each die.
 //! 
 //! There are additional constraints checked for in this operator alone as well: neither `n` or `s` can be zero,
 //! and `s` cannot be a negative number. `n` is allowed to be negative, but rather than rolling "negative dice",

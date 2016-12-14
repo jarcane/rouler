@@ -58,6 +58,7 @@ impl<'a> Roller<'a> {
     /// a panic. 
     ///
     /// # Examples
+    ///
     /// ```
     /// use rouler::Roller;
     ///
@@ -69,6 +70,7 @@ impl<'a> Roller<'a> {
     ///
     /// Rollers implement `Eq` and `Ord`, based on their current totals, so die results can be compared
     /// directly without having to first call the `total` method:
+    ///
     /// ```
     /// # use rouler::Roller;
     /// let att = Roller::new("1d20 + 5");
@@ -82,6 +84,7 @@ impl<'a> Roller<'a> {
     /// ```
     /// 
     /// For convenience's sake, Rollers also implement `Display`, so they are printable:
+    ///
     /// ```
     /// # use rouler::Roller;
     /// println!("{}", Roller::new("4d8 + 5"));
