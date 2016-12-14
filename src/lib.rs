@@ -24,6 +24,36 @@
 //! println!("STR: {}", stat.total());
 //! println!("DEX: {}", stat.reroll());
 //! ``` 
+//! 
+//! ## The Die Roll Syntax
+//! 
+//! roller uses parsed strings to define die rolls, according to the following [pest](https://github.com/dragostis/pest/) 
+//! grammar found in `parse.rs`, with some additional rules checking: 
+//! ```rust,ignore
+//! expression = _{
+//!     { ["("] ~ expression ~ [")"] | number }
+//!     addition       = { plus  | minus }
+//!     multiplication = { times | slash }
+//!     die_roll       = { roll }
+//! }
+//! number = @{ ["-"]? ~ (["0"] | ['1'..'9'] ~ ['0'..'9']*) }
+//! plus   =  { ["+"] }
+//! minus  =  { ["-"] }
+//! times  =  { ["*"] }
+//! slash  =  { ["/"] }
+//! roll   =  { ["d"] | ["D"] }
+//! 
+//! whitespace = _{ [" "] }
+//! ```
+//! 
+//! Largely this should all be familiar basic mathematical notation, the key addition being the `d` operator,
+//! which operates according to the standard notation familiar from tabletop RPGs, ie.:
+//! 
+//! `n [d|D] s`, where `n` = the number of dice to roll, and `s` = the number of sides on each die.
+//! 
+//! There are additional constraints checked for in this operator alone as well: neither `n` or `s` can be zero,
+//! and `s` cannot be a negative number. `n` is allowed to be negative, but rather than rolling "negative dice",
+//! this merely negates the value of the entire roll, such that `-3d6` would generate a value between -3 and -18.
 
 #[macro_use]
 extern crate pest;
