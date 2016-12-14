@@ -63,3 +63,14 @@ fn d_op_is_case_insensitive() {
 fn spaces_not_allowed_in_die_codes() {
     assert_range!(1 => Roller::new("1 d 6").total() => 6)
 }
+
+#[test]
+fn rollers_are_iterators() {
+    let mut d20 = Roller::new("1d20");
+    let mut roll5 = d20.take(5).collect::<Vec<i64>>();
+
+    println!("{}, {:?}", d20, roll5);
+
+    assert_eq!(5, roll5.len());
+    assert_eq!(d20.total(), roll5.pop().unwrap());
+}

@@ -123,6 +123,14 @@ impl<'a> Roller<'a> {
     }
 }
 
+impl<'a> Iterator for Roller<'a> {
+    type Item = i64;
+
+    fn next(&mut self) -> Option<i64> {
+        Some(self.reroll())
+    }
+}
+
 impl<'a> PartialEq for Roller<'a> {
     fn eq(&self, other: &Roller) -> bool {
         self.total == other.total
