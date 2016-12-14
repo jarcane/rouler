@@ -1,17 +1,17 @@
-# roller
+# rouler
 
 A container-like system for generating dice rolls
 
 ## Usage
 
-roller is a Rust library for generating die rolls from convenient little state containers. A die roll can be created and stored and called repeatedly to generate new values.
+rouler is a Rust library for generating die rolls from convenient little state containers. A die roll can be created and stored and called repeatedly to generate new values.
 
 This allows easy use and re-use of specific die rolls, and even comparison. 
 
 ```rust
-extern crate roller;
+extern crate rouler;
 
-use roller::Roller;
+use rouler::Roller;
 
 let mut let mut stat = Roller::new("3d6");
 

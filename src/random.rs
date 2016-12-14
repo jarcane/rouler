@@ -1,4 +1,4 @@
-// roller - A container-based system for generating die rolls
+// rouler - A container-based system for generating die rolls
 // Copyright (C) 2016 by John Berry
 //
 // This Source Code Form is subject to the terms of the Mozilla Public

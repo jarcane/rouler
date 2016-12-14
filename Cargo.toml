@@ -1,11 +1,11 @@
 [package]
-name = "roller"
+name = "rouler"
 description = "A container-like system for generating dice rolls"
 version = "0.1.0"
 authors = ["jarcane <jarcane@users.noreply.github.com>"]
 license = "MPL-2.0"
-homepage = "https://github.com/jarcane/roller"
-repository = "https://github.com/jarcane/roller"
+homepage = "https://github.com/jarcane/rouler"
+repository = "https://github.com/jarcane/rouler"
 
 [dependencies]
 pest = "0.4.0"

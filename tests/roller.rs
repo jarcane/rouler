@@ -1,13 +1,13 @@
-// roller - A container-based system for generating die rolls
+// rouler - A container-based system for generating die rolls
 // Copyright (C) 2016 by John Berry
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-extern crate roller;
+extern crate rouler;
 
-use roller::*;
+use rouler::*;
 
 macro_rules! assert_range {
     ( $begin:expr => $val:expr => $end:expr ) => (assert!(($begin <= $val) && ($val <= $end));)
