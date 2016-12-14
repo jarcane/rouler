@@ -90,7 +90,7 @@ impl<'a> Roller<'a> {
     /// println!("{}", Roller::new("4d8 + 5"));
     /// // => [4d8 + 5: 24]
     /// ```
-    pub fn new(roll: &str) -> Roller {
+    pub fn new(roll: &'a str) -> Self {
         Roller {
             roll: roll,
             total: roll_dice(roll),
