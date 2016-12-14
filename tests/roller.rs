@@ -52,6 +52,12 @@ fn non_zero_sides_disallowed() {
 }
 
 #[test]
+fn d_op_is_case_insensitive() {
+    assert_range!(1 => Roller::new("1D6").total() => 6);
+    assert_range!(1 => Roller::new("1d6").total() => 6);
+}
+
+#[test]
 #[ignore]
 #[should_panic(expected = "no pattern matched")]
 fn spaces_not_allowed_in_die_codes() {
