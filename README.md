@@ -1,5 +1,5 @@
 # rouler 
-[![Crates.io](https://img.shields.io/crates/v/rouler.svg)](https://crates.io/crates/rouler) [![docs.rs](https://docs.rs/rouler/badge.svg)]("https://docs.rs/rouler/")
+[![Crates.io](https://img.shields.io/crates/v/rouler.svg)](https://crates.io/crates/rouler) [![docs.rs](https://docs.rs/rouler/badge.svg)](https://docs.rs/rouler/)
 
 A container-like system for generating dice rolls
 
