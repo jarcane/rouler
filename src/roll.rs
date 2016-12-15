@@ -18,7 +18,7 @@ use parse::*;
 ///
 /// # Panics
 ///
-/// As `roll_dice` parses its argument, it will thus panic if the given syntax fails to parse.
+/// As `roll_dice` parses its argument, it will thus panic if the given syntax is incorrect.
 ///
 /// # Examples
 /// ```
@@ -120,6 +120,44 @@ impl<'a> Roller<'a> {
     /// Returns the result of the last roll made by the `Roller`.
     pub fn total(&self) -> i64 {
         self.total
+    }
+
+    /// Returns a reference to self for use as an `Iterator`. This allows for iterating infinitely and lazily over
+    /// successive rolls of the dice. By borrowing as mutable, the state of the internal total is preserved,
+    /// so that calls to `total()` will remain consistent.
+    ///
+    /// # Examples
+    /// 
+    /// ```
+    /// # use rouler::Roller;
+    /// // Collect multiple results to a vector:
+    /// let stats = Roller::new("3d6").iter().take(6).collect::<Vec<i64>>();
+    /// ```
+    ///
+    /// *Remember!* Rollers are infinite iterators: *always* use `take()` to avoid infinite loops!
+    /// This is safe:
+    /// 
+    /// ```
+    /// # use rouler::Roller;
+    /// // Keep rolling until a result greater than a threshold:
+    /// assert!(Roller::new("4d6").iter().skip_while(|&x| x < 13).take(1).last().unwrap() >= 13);
+    /// ```
+    ///
+    /// But this will not terminate:
+    ///
+    /// ```rust,ignore
+    /// assert!(Roller::new("4d6").iter().skip_while(|&x| x < 13).last().unwrap() >= 13);
+    /// ```
+    pub fn iter(&mut self) -> &mut Self {
+        self.by_ref()
+    }
+}
+
+impl<'a> Iterator for Roller<'a> {
+    type Item = i64;
+
+    fn next(&mut self) -> Option<i64> {
+        Some(self.reroll())
     }
 }
 

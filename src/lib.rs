@@ -57,7 +57,21 @@
 //! There are additional constraints checked for in this operator alone as well: neither `n` or `s` can be zero,
 //! and `s` cannot be a negative number. `n` is allowed to be negative, but rather than rolling "negative dice",
 //! this merely negates the value of the entire roll, such that `-3d6` would generate a value between -3 and -18.
-
+//!
+//! ## Changelog
+//! 
+//! ### 0.1.3
+//! * Added Iterator support to Rollers
+//! * Better type inference for Roller::new()
+//! 
+//! ### 0.1.2
+//! * Documentation fixes
+//! 
+//! ### 0.1.1
+//! * Documentation fixes
+//! 
+//! ### 0.1.0
+//! * Initial release 
 #[macro_use]
 extern crate pest;
 extern crate rand;
