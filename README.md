@@ -14,7 +14,7 @@ extern crate rouler;
 
 use rouler::Roller;
 
-let mut let mut stat = Roller::new("3d6");
+let mut stat = Roller::new("3d6");
 
 println!("STR: {}", stat.total());
 println!("DEX: {}", stat.reroll());
