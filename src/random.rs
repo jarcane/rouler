@@ -7,12 +7,6 @@
 
 use rand::{thread_rng, Rng};
 
-// pub fn roll_dice_raw(num: i64, sides: u64) -> i64 {
-//     let mut rng = thread_rng();
-
-//     (0..num.abs()).map(|_| rng.gen_range(1, sides as i64 + 1)).fold(0, |acc, x| acc + x)
-// }
-
 trait Die : Iterator<Item=i64> {}
 
 impl<T: Iterator<Item=i64>> Die for T {}
@@ -30,7 +24,7 @@ impl Iterator for StdDie {
 }
 
 fn roll_dice_gen<T: Die>(num: i64, die: T) -> i64 {
-    die.take(num as usize).fold(0, |acc, x| acc + x)
+    die.take(num as usize).sum()
 }
 
 pub fn roll_dice_raw(num: i64, sides: u64) -> i64 {
