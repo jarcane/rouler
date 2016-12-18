@@ -51,8 +51,8 @@ impl_rdp! {
                         } else {
                             match left.signum() {
                                 0  => panic!("Number of sides must not be zero"),
-                                -1 => -roll_dice_raw(left.abs(), right as u64),
-                                1  => roll_dice_raw(left, right as u64),
+                                -1 => -roll_dice_gen(left.abs(), StdDie::from(right as u64)),
+                                1  => roll_dice_gen(left, StdDie::from(right as u64)),
                                 _  => unreachable!()
                             }
                         }

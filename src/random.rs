@@ -7,8 +7,7 @@
 
 use rand::{thread_rng, Rng};
 
-trait Die : Iterator<Item=i64> {}
-
+pub trait Die : Iterator<Item=i64> {}
 impl<T: Iterator<Item=i64>> Die for T {}
 
 pub struct StdDie {
@@ -23,10 +22,12 @@ impl Iterator for StdDie {
     }
 }
 
-fn roll_dice_gen<T: Die>(num: i64, die: T) -> i64 {
-    die.take(num as usize).sum()
+impl From<u64> for StdDie {
+    fn from(n: u64) -> Self {
+        StdDie{sides:n}
+    }
 }
 
-pub fn roll_dice_raw(num: i64, sides: u64) -> i64 {
-    roll_dice_gen(num, StdDie{sides: sides})
+pub fn roll_dice_gen<T: Die>(num: i64, die: T) -> i64 {
+    die.take(num as usize).sum()
 }
