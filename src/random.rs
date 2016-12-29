@@ -7,11 +7,11 @@
 
 use rand::{thread_rng, Rng};
 
-pub trait Die : Iterator<Item=i64> {}
-impl<T: Iterator<Item=i64>> Die for T {}
+pub trait Die: Iterator<Item = i64> {}
+impl<T: Iterator<Item = i64>> Die for T {}
 
 pub struct StdDie {
-    sides: u64
+    sides: u64,
 }
 
 impl Iterator for StdDie {
@@ -24,7 +24,37 @@ impl Iterator for StdDie {
 
 impl From<u64> for StdDie {
     fn from(n: u64) -> Self {
-        StdDie{sides:n}
+        StdDie { sides: n }
+    }
+}
+
+pub struct ExplodingDie {
+    sides: u64,
+}
+
+impl Iterator for ExplodingDie {
+    type Item = i64;
+
+    fn next(&mut self) -> Option<i64> {
+        let mut result: i64 = 0;
+
+        loop {
+            let x = thread_rng().gen_range(1, self.sides as i64 + 1);
+
+            result += x;
+
+            if x != self.sides as i64 {
+                break;
+            }
+        }
+
+        Some(result)
+    }
+}
+
+impl From<u64> for ExplodingDie {
+    fn from(n: u64) -> Self {
+        ExplodingDie { sides: n }
     }
 }
 
