@@ -16,6 +16,7 @@ lazy_static! {
         use self::Assoc::*;
         use self::Rule::*;
 
+        // Order of precedence: "+-" is less than "*/" is less than "dD"
         PrecClimber::new(vec![
             Operator::new(plus, Left) | Operator::new(minus, Left),
             Operator::new(times, Left) | Operator::new(slash, Left),
@@ -27,6 +28,9 @@ lazy_static! {
 #[derive(Parser)]
 #[grammar = "rouler.pest"]
 pub struct RollParser;
+
+// Force recompile when parse changes
+const _GRAMMAR : &'static str = include_str!("rouler.pest");
 
 pub fn compute(expr: Pairs<Rule>) -> i64 {
     PREC_CLIMBER.climb(

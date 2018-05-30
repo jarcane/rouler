@@ -1,14 +1,16 @@
 number = @{ "-"? ~ ("0" | '1'..'9' ~ '0'..'9'*) }
 
-op = _{ plus | minus | times | slash | roll }
+op = _{ plus | minus | times | slash }
   plus = { "+" }
   minus = { "-" }
   times = { "*" }
   slash = { "/" }
+
+dice = _{ number ~ (roll ~ number) }
   roll = { "d" | "D" }
 
 expr = { term ~ (op ~ term)* }
-  term = _{ number | "(" ~ expr ~ ")" }
+  term = _{ dice | number | "(" ~ expr ~ ")" }
 
 calc = _{ soi ~ expr ~ eoi }
 
