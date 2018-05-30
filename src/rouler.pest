@@ -1,0 +1,15 @@
+number = @{ "-"? ~ ("0" | '1'..'9' ~ '0'..'9'*) }
+
+op = _{ plus | minus | times | slash | roll }
+  plus = { "+" }
+  minus = { "-" }
+  times = { "*" }
+  slash = { "/" }
+  roll = { "d" | "D" }
+
+expr = { term ~ (op ~ term)* }
+  term = _{ number | "(" ~ expr ~ ")" }
+
+calc = _{ soi ~ expr ~ eoi }
+
+whitespace = _{ " " }

@@ -28,10 +28,8 @@ use parse::*;
 /// ```
 ///
 pub fn roll_dice(r: &str) -> i64 {
-    let mut parser = Rdp::new(StringInput::new(r));
-    parser.expression();
-
-    parser.compute()
+    let parser = RollParser::parse(Rule::calc, r);
+    compute(parser.expect("Failed to parse roll!"))
 }
 
 /// The `Roller` is the core struct of the library. The basic principle is to provide a reusable
