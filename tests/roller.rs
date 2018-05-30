@@ -35,6 +35,13 @@ fn reroll_changes_value() {
 }
 
 #[test]
+fn roll_custom_dice_within_range() {
+    for _ in 0..100 {
+        assert_range!(2 => roll_dice("2d[1, 3, 5]") => 10)
+    }
+}
+
+#[test]
 fn negative_dice_negates_roll_value() {
     assert_range!(-18 => Roller::new("-3d6").total() => -3);
 }

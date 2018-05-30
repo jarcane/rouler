@@ -8,9 +8,11 @@ op = _{ plus | minus | times | slash }
 
 dice = _{ number ~ (roll ~ number) }
   roll = { "d" | "D" }
+custom_dice = { number ~ roll ~ sides }
+  sides = _{ "[" ~ number ~ (", " ~ number )* ~ "]" }
 
 expr = { term ~ (op ~ term)* }
-  term = _{ dice | number | "(" ~ expr ~ ")" }
+  term = _{ custom_dice | dice | number | "(" ~ expr ~ ")" }
 
 calc = _{ soi ~ expr ~ eoi }
 

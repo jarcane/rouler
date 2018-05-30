@@ -36,8 +36,27 @@ pub fn compute(expr: Pairs<Rule>) -> i64 {
     PREC_CLIMBER.climb(
         expr,
         |pair: Pair<Rule>| match pair.as_rule() {
-            Rule::number => pair.as_str().parse::<i64>().unwrap(),
+            Rule::number => pair.as_str().parse::<i64>().unwrap().into(),
             Rule::expr => compute(pair.into_inner()),
+            Rule::custom_dice => {
+                let mut inner = pair.into_inner();
+                // LHS
+                let num = inner.next().unwrap();
+                let lhs = num.as_str().parse::<i64>().expect("Did not find a number on LHS!");
+                // Operator
+                let d = inner.next().unwrap().as_str();
+                assert!(d == "d" || d == "D");
+                // RHS
+                let sides : Vec<i64> = inner.next().unwrap().as_str().trim_matches(|c| c == '[' || c == ']')
+                    .split(",").map(|s| {
+                        s.trim().parse::<i64>().expect("Did not find a number on RHS!")
+                    })
+                    .collect();
+                lhs.signum() * match sides.len() {
+                    1 => roll_dice_raw(lhs.abs(), sides[0] as u64),
+                    _ => roll_custom_dice_raw(lhs.abs(), &sides),
+                }
+            },
             _ => unreachable!(),
         },
         |lhs: i64, op: Pair<Rule>, rhs: i64| match op.as_rule() {
