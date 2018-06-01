@@ -47,15 +47,12 @@ pub fn compute(expr: Pairs<Rule>) -> i64 {
                 let d = inner.next().unwrap().as_str();
                 assert!(d == "d" || d == "D");
                 // RHS
-                let sides : Vec<i64> = inner.next().unwrap().as_str().trim_matches(|c| c == '[' || c == ']')
+                let sides : Vec<u64> = inner.next().unwrap().as_str().trim_matches(|c| c == '[' || c == ']')
                     .split(",").map(|s| {
-                        s.trim().parse::<i64>().expect("Did not find a number on RHS!")
+                        s.trim().parse::<u64>().expect("Did not find a number on RHS!")
                     })
                     .collect();
-                lhs.signum() * match sides.len() {
-                    1 => roll_dice_raw(lhs.abs(), sides[0] as u64),
-                    _ => roll_custom_dice_raw(lhs.abs(), &sides),
-                }
+                lhs.signum() * roll_custom_dice_raw(lhs.abs(), &sides)
             },
             _ => unreachable!(),
         },

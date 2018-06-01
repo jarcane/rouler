@@ -37,14 +37,14 @@ fn reroll_changes_value() {
 #[test]
 fn roll_custom_dice_within_range() {
     for _ in 0..100 {
-        assert_range!(2 => roll_dice("2d[1, 3, 5]") => 10)
+        assert_range!(10 => roll_dice("2d[5, 6, 7]") => 14)
     }
 }
 
 #[test]
 fn custom_dice_spaces_optional() {
     for _ in 0..100 {
-        assert_range!(2 => roll_dice("2d[1,3,5]") => 10)
+        assert_range!(10 => roll_dice("2d[5,6,7]") => 14)
     }
 }
 
