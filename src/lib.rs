@@ -83,4 +83,4 @@ mod parse;
 mod random;
 mod roll;
 
-pub use roll::{Roller, roll_dice};
+pub use roll::{Roller, roll_dice, roll_dice_or_fail, roller_or_fail};
