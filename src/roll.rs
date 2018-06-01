@@ -42,7 +42,7 @@ pub fn roll_dice(r: &str) -> i64 {
 /// ```
 /// use rouler::roll_dice_or_fail;
 ///
-/// assert!(roll_dice_or_fail("6d6").is_ok())
+/// assert!(roll_dice_or_fail("6d6").is_ok());
 /// assert!(roll_dice_or_fail("food4").is_err())
 /// ```
 pub fn roll_dice_or_fail(r: &str) -> Result<i64, Error<impl RuleType>> {
