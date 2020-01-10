@@ -30,23 +30,27 @@
 //! ## The Die Roll Syntax
 //!
 //! rouler uses parsed strings to define die rolls, according to the following [pest](https://github.com/dragostis/pest/)
-//! grammar found in `parse.rs`, with some additional rules checking:
+//! grammar found in `rouler.pest`, with some additional rules checking:
 //!
 //! ```rust,ignore
-//! expression = _{
-//!     { ["("] ~ expression ~ [")"] | number }
-//!     addition       = { plus  | minus }
-//!     multiplication = { times | slash }
-//!     die_roll       = { roll }
-//! }
-//! number = @{ ["-"]? ~ (["0"] | ['1'..'9'] ~ ['0'..'9']*) }
-//! plus   =  { ["+"] }
-//! minus  =  { ["-"] }
-//! times  =  { ["*"] }
-//! slash  =  { ["/"] }
-//! roll   =  { ["d"] | ["D"] }
+//! number = @{ "-"? ~ ("0" | '1'..'9' ~ '0'..'9'*) }
+//! op = _{ plus | minus | times | slash }
+//! plus = { "+" }
+//! minus = { "-" }
+//! times = { "*" }
+//! slash = { "/" }
 //!
-//! whitespace = _{ [" "] }
+//! dice = _{ number ~ (roll ~ number) }
+//! roll = { "d" | "D" }
+//! custom_dice = { number ~ roll ~ sides }
+//! sides = _{ "[" ~ number ~ ("," ~ number )* ~ "]" }
+//!
+//! expr = { term ~ (op ~ term)* }
+//! term = _{ custom_dice | dice | number | "(" ~ expr ~ ")" }
+//!
+//! calc = _{ soi ~ expr ~ eoi }
+//!
+//! whitespace = _{ " " }
 //! ```
 //!
 //! Largely this should all be familiar basic mathematical notation, the key addition being the `d` operator,
@@ -57,8 +61,19 @@
 //! There are additional constraints checked for in this operator alone as well: neither `n` or `s` can be zero,
 //! and `s` cannot be a negative number. `n` is allowed to be negative, but rather than rolling "negative dice",
 //! this merely negates the value of the entire roll, such that `-3d6` would generate a value between -3 and -18.
+//! 
+//! Custom dice can also be specified, with arbitrary specific values, such as `1d[2,4,8,16,32,64]`, where the 
+//! list after the `d` operator represents each face on the specified die (in this case, a backgammon doubling cube).
 //!
 //! ## Changelog
+//! 
+//! ### 0.2.1
+//! * docs update
+//! 
+//! ### 0.2.0
+//! * support for better error handling
+//! * updated to pest 1.0 grammar
+//! * arbitrary die sequences
 //!
 //! ### 0.1.3
 //! * Added Iterator support to Rollers

@@ -31,11 +31,6 @@ if att > def {
 }
 ```
 
-## Current Wishlist
-
-* Arbitrary die sequences, for custom dice: `Roller::new("4d[1, 3, 5, 7]")`
-* (Maybe) FromStr implementation for Rollers: `"3d20 * 2".from_str().unwrap()"`
-
 ## License
 
 This Source Code Form is subject to the terms of the Mozilla Public
