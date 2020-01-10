@@ -30,13 +30,13 @@ lazy_static! {
 pub struct RollParser;
 
 // Force recompile when parse changes
-const _GRAMMAR : &'static str = include_str!("rouler.pest");
+const _GRAMMAR : &str = include_str!("rouler.pest");
 
 pub fn compute(expr: Pairs<Rule>) -> i64 {
     PREC_CLIMBER.climb(
         expr,
         |pair: Pair<Rule>| match pair.as_rule() {
-            Rule::number => pair.as_str().parse::<i64>().unwrap().into(),
+            Rule::number => pair.as_str().parse::<i64>().unwrap(),
             Rule::expr => compute(pair.into_inner()),
             Rule::custom_dice => {
                 let mut inner = pair.into_inner();
@@ -48,12 +48,12 @@ pub fn compute(expr: Pairs<Rule>) -> i64 {
                 assert!(d == "d" || d == "D");
                 // RHS
                 let mut sides = vec![];
-                while let Some(s) = inner.next() {
+                for s in inner {
                     // Collect numbers
                     if s.as_rule() == Rule::number {
                         sides.push(s.as_str().parse::<u64>().expect("Non-number found on RHS!"));
                     }
-                }
+                };
                 lhs.signum() * roll_custom_dice_raw(lhs.abs(), &sides)
             },
             _ => unreachable!(),

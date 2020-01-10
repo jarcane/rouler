@@ -47,7 +47,7 @@ pub fn roll_dice(r: &str) -> i64 {
 /// ```
 pub fn roll_dice_or_fail(r: &str) -> Result<i64, Error<impl RuleType>> {
     let parser = RollParser::parse(Rule::calc, r);
-    parser.map(|p| compute(p))
+    parser.map(compute)
 }
 
 /// A function for safely creating a new `Roller` without panicking.
@@ -129,7 +129,7 @@ impl<'a> Roller<'a> {
     /// ```
     pub fn new(roll: &'a str) -> Self {
         Roller {
-            roll: roll,
+            roll,
             total: roll_dice(roll),
         }
     }
