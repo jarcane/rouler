@@ -72,12 +72,17 @@
 //!
 //! ### 0.1.0
 //! * Initial release
+//! 
 #[macro_use]
 extern crate pest;
+#[macro_use]
+extern crate pest_derive;
 extern crate rand;
+#[macro_use]
+extern crate lazy_static;
 
 mod parse;
 mod random;
 mod roll;
 
-pub use roll::{roll_dice, Roller};
+pub use roll::{Roller, roll_dice, roll_dice_or_fail, roller_or_fail};

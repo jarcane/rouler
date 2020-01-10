@@ -11,7 +11,7 @@ use std::fmt;
 use parse::*;
 use pest::*;
 
-/// A simple function for throwaway die rolls that do not need saved as a
+/// A simple function for throwaway die rolls that do not need to be saved as a
 /// `Roller`. Provided for convenience.
 ///
 /// Takes an input of a `&str` containing syntax for a die roll, returns total.
@@ -28,10 +28,47 @@ use pest::*;
 /// ```
 ///
 pub fn roll_dice(r: &str) -> i64 {
-    let mut parser = Rdp::new(StringInput::new(r));
-    parser.expression();
+    let parser = RollParser::parse(Rule::calc, r);
+    compute(parser.expect("Failed to parse roll!"))
+}
 
-    parser.compute()
+/// A function for throwaway die rolls that do not need to be saved as a
+/// `Roller`. Provided for convenience.
+///
+/// Takes an input of a `&str` containing syntax for a die roll, returns Ok(total)
+/// if the input parses successfully, otherwise a `ParsingError`.
+///
+/// # Examples
+/// ```
+/// use rouler::roll_dice_or_fail;
+///
+/// assert!(roll_dice_or_fail("6d6").is_ok());
+/// assert!(roll_dice_or_fail("food4").is_err())
+/// ```
+pub fn roll_dice_or_fail(r: &str) -> Result<i64, Error<impl RuleType>> {
+    let parser = RollParser::parse(Rule::calc, r);
+    parser.map(compute)
+}
+
+/// A function for safely creating a new `Roller` without panicking.
+///
+/// Takes a `&str` input and if the syntax parses, returns a Roller wrapped by a Result.
+/// Otherwise returns a `ParsingError`.
+///
+/// # Examples
+/// ```
+/// use rouler::roller_or_fail;
+///
+///
+/// ```
+pub fn roller_or_fail<'a>(r: &'a str) -> Result<Roller<'a>, Error<impl RuleType>> {
+    let parser = RollParser::parse(Rule::calc, r);
+    parser.map(|p| {
+        Roller {
+            roll: r,
+            total: compute(p),
+        }
+    })
 }
 
 /// The `Roller` is the core struct of the library. The basic principle is to provide a reusable
@@ -77,7 +114,7 @@ impl<'a> Roller<'a> {
     /// let def = Roller::new("1d20 + 2");
     ///
     /// if att > def {
-    ///     println!("You struck the monster!");        
+    ///     println!("You struck the monster!");
     /// } else {
     ///     println!("You missed!");
     /// }
@@ -92,7 +129,7 @@ impl<'a> Roller<'a> {
     /// ```
     pub fn new(roll: &'a str) -> Self {
         Roller {
-            roll: roll,
+            roll,
             total: roll_dice(roll),
         }
     }

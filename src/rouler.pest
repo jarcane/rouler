@@ -1,0 +1,19 @@
+number = @{ "-"? ~ ("0" | '1'..'9' ~ '0'..'9'*) }
+
+op = _{ plus | minus | times | slash }
+  plus = { "+" }
+  minus = { "-" }
+  times = { "*" }
+  slash = { "/" }
+
+dice = _{ number ~ (roll ~ number) }
+  roll = { "d" | "D" }
+custom_dice = { number ~ roll ~ sides }
+  sides = _{ "[" ~ number ~ ("," ~ number )* ~ "]" }
+
+expr = { term ~ (op ~ term)* }
+  term = _{ custom_dice | dice | number | "(" ~ expr ~ ")" }
+
+calc = _{ soi ~ expr ~ eoi }
+
+whitespace = _{ " " }

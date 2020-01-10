@@ -2,7 +2,7 @@
 name = "rouler"
 description = "A container-like system for generating dice rolls"
 keywords = ["dice", "roller", "RPG", "game", "gaming"]
-version = "0.1.3"
+version = "0.2.0"
 readme = "README.md"
 authors = ["jarcane <jarcane@users.noreply.github.com>"]
 license = "MPL-2.0"
@@ -11,5 +11,7 @@ documentation = "https://docs.rs/rouler/"
 repository = "https://github.com/jarcane/rouler"
 
 [dependencies]
-pest = "0.4.0"
-rand = "0.3.0"
+pest = "1.0"
+pest_derive = "1.0"
+lazy_static = "1.0"
+rand = "0.5"
