@@ -5,11 +5,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-use std::fmt;
 use std::cmp::Ordering;
+use std::fmt;
 
-use pest::*;
 use parse::*;
+use pest::*;
 
 /// A simple function for throwaway die rolls that do not need to be saved as a
 /// `Roller`. Provided for convenience.
@@ -85,14 +85,14 @@ pub struct Roller<'a> {
 }
 
 impl<'a> Roller<'a> {
-    /// Creates a new `Roller` with the given die roll syntax, and populates the stored total with a first 
+    /// Creates a new `Roller` with the given die roll syntax, and populates the stored total with a first
     /// roll of the indicated dice. Because subsequent rerolls mutate the object in order to store the most
-    /// recent roll, it should be declared with `let mut` if you intend to reroll it. 
-    /// 
+    /// recent roll, it should be declared with `let mut` if you intend to reroll it.
+    ///
     /// # Panics
     ///
     /// As a `Roller` rolls itself on creation, it thus triggers the parser, and incorrect syntax will cause
-    /// a panic. 
+    /// a panic.
     ///
     /// # Examples
     ///
@@ -103,7 +103,7 @@ impl<'a> Roller<'a> {
     ///
     /// println!("Damage, rnd 1: {}", laser_damage.total());
     /// println!("Damage, rnd 2: {}", laser_damage.reroll());
-    /// ``` 
+    /// ```
     ///
     /// Rollers implement `Eq` and `Ord`, based on their current totals, so die results can be compared
     /// directly without having to first call the `total` method:
@@ -112,14 +112,14 @@ impl<'a> Roller<'a> {
     /// # use rouler::Roller;
     /// let att = Roller::new("1d20 + 5");
     /// let def = Roller::new("1d20 + 2");
-    /// 
+    ///
     /// if att > def {
     ///     println!("You struck the monster!");
     /// } else {
     ///     println!("You missed!");
     /// }
     /// ```
-    /// 
+    ///
     /// For convenience's sake, Rollers also implement `Display`, so they are printable:
     ///
     /// ```
@@ -164,7 +164,7 @@ impl<'a> Roller<'a> {
     /// so that calls to `total()` will remain consistent.
     ///
     /// # Examples
-    /// 
+    ///
     /// ```
     /// # use rouler::Roller;
     /// // Collect multiple results to a vector:
@@ -173,7 +173,7 @@ impl<'a> Roller<'a> {
     ///
     /// *Remember!* Rollers are infinite iterators: *always* use `take()` to avoid infinite loops!
     /// This is safe:
-    /// 
+    ///
     /// ```
     /// # use rouler::Roller;
     /// // Keep rolling until a result greater than a threshold:

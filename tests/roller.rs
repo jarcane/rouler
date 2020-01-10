@@ -10,7 +10,9 @@ extern crate rouler;
 use rouler::*;
 
 macro_rules! assert_range {
-    ( $begin:expr => $val:expr => $end:expr ) => (assert!(($begin <= $val) && ($val <= $end));)
+    ($begin:expr => $val:expr => $end:expr) => {
+        assert!(($begin <= $val) && ($val <= $end));
+    };
 }
 
 #[test]
@@ -30,7 +32,7 @@ fn roller_object_within_range() {
 #[test]
 fn reroll_changes_value() {
     let mut test_roll = Roller::new("100d100");
-    
+
     assert_ne!(test_roll.total(), test_roll.reroll())
 }
 
