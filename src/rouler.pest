@@ -6,7 +6,13 @@ op = _{ plus | minus | times | slash }
   times = { "*" }
   slash = { "/" }
 
-dice = _{ number ~ (roll ~ number) }
+post = _{ best | worst | adv | dis }
+  best = { "b" }
+  worst = { "w" }
+  adv = { "a" }
+  dis = { "d" }
+
+dice = { number ~ (roll ~ number) ~ (post ~ number?)? }
   roll = { "d" | "D" }
 custom_dice = { number ~ roll ~ sides }
   sides = _{ "[" ~ number ~ ("," ~ number )* ~ "]" }
