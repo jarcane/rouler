@@ -11,7 +11,7 @@ use rouler::*;
 
 macro_rules! assert_range {
     ($begin:expr => $val:expr => $end:expr) => {
-        assert!(($begin <= $val) && ($val <= $end));
+        assert!(($begin <= $val) && ($val <= $end))
     };
 }
 
