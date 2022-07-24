@@ -18,3 +18,18 @@ pub fn roll_custom_dice_raw(num: i64, sides: &[u64]) -> i64 {
 
     (0..num.abs()).map(|_| rng.choose(sides).unwrap()).fold(0, |acc, x| acc + *x as i64)
 }
+
+pub fn roll_and_take_dice_raw(num: i64, sides: u64, take: i64) -> i64 {
+    let mut rng = thread_rng();
+    let mut rolls: Vec<_> = (0..num.abs()).map(|_| rng.gen_range(1, sides as i64 + 1)).collect();
+    rolls.sort_unstable();
+
+    if take.is_positive() {
+        rolls.iter().rev().take(take.abs() as usize).sum()
+    } else if take.is_negative() {
+        rolls.iter().take(take.abs() as usize).sum()
+    } else {
+        // Zero is technically correct even if it seems odd.
+        0
+    }
+}
